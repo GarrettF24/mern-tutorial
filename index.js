@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(cors())
 
 mongoose.connect(
-  "mongodb+srv://GarrettF:@practicecluster.jw23b.mongodb.net/cookbookDataBase?retryWrites=true&w=majority"
+  "mongodb+srv://@practicecluster.jw23b.mongodb.net/cookbookDataBase?retryWrites=true&w=majority"
 )
 
 app.get("/", (req, res) => res.send("this is the home root"))

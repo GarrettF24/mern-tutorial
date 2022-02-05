@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css"
+import axios from "axios"
+import { useEffect, useState } from "react"
 
 function App() {
+  const [recipes, setRecipes] = useState([])
+
+  useEffect(() => {
+    const fetchRecipes = async () => {
+      const recipes = await axios.get("http://localhost:3001/recipes")
+      setRecipes(recipes.data)
+    }
+    fetchRecipes()
+  }, [])
+
+  console.log(recipes)
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      {recipes.map((recipe, index) => {
+        return (
+          <div key={index} className="recipe">
+            <h1>{recipe.name}</h1>
+            <div className="ingredients">
+              {recipe.ingredients.map((ingredient) => {
+                return <p>{ingredient}</p>
+              })}
+            </div>
+          </div>
+        )
+      })}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
