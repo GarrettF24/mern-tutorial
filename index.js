@@ -1,13 +1,16 @@
 const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
+const cors = require("cors")
+
 const User = require("./models/users")
 const Recipe = require("./models/recipes")
 
 app.use(express.json())
+app.use(cors())
 
 mongoose.connect(
-  "mongodb+srv://@practicecluster.jw23b.mongodb.net/cookbookDataBase?retryWrites=true&w=majority"
+  "mongodb+srv://GarrettF:@practicecluster.jw23b.mongodb.net/cookbookDataBase?retryWrites=true&w=majority"
 )
 
 app.get("/", (req, res) => res.send("this is the home root"))
