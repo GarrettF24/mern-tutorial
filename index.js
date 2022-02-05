@@ -10,7 +10,7 @@ app.use(express.json())
 app.use(cors())
 
 mongoose.connect(
-  "mongodb+srv://@practicecluster.jw23b.mongodb.net/cookbookDataBase?retryWrites=true&w=majority"
+  "mongodb+srv://GarrettF:@practicecluster.jw23b.mongodb.net/cookbookDataBase?retryWrites=true&w=majority"
 )
 
 app.get("/", (req, res) => res.send("this is the home root"))
@@ -76,6 +76,19 @@ app.post("/recipes", async (req, res) => {
     const recipe = new Recipe(req.body)
     await recipe.save()
     res.status(201).json(recipe)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: error.message })
+  }
+})
+
+app.delete("/recipes/:id", (req, res) => {
+  try {
+    const { id } = req.params
+    const deleted = Recipe.findByIdAndDelete(id)
+    deleted
+      ? res.status(200).send("Recipe deleted")
+      : new Error("Recipe not deleted!")
   } catch (error) {
     console.log(error)
     res.status(500).json({ error: error.message })
