@@ -1,12 +1,22 @@
 const express = require("express")
 const app = express()
 const mongoose = require("mongoose")
-const PORT = process.env.PORT || 3001
+const UserModel = require("./models/users")
 
 mongoose.connect(
-  "mongodb+srv://GarrettF:<password>@practicecluster.jw23b.mongodb.net/cookbookDatabase?retryWrites=true&w=majority"
+  "mongodb+srv://GarrettF:<>@practicecluster.jw23b.mongodb.net/cookbookDataBase?retryWrites=true&w=majority"
 )
 
-app.listen(PORT, () => {
+app.get("/users", async (req, res) => {
+  try {
+    const users = await UserModel.find()
+    res.json(users)
+  } catch (error) {
+    console.log(error)
+    res.status(500).json({ error: error.message })
+  }
+})
+
+app.listen(3001, () => {
   console.log("Server running successfully")
 })
